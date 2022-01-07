@@ -40,13 +40,13 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.DEPLOY_MACHINE_IP }} >> ~/.ssh/known_hosts
 
       - name: Stop old container
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S STOP_OLD_CONTAINER
+        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $STOP_OLD_CONTAINER
 
       - name: Remove old container
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S REMOVE_OLD_CONTAINER
+        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $REMOVE_OLD_CONTAINER
 
       - name: Remove old image
         run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $REMOVE_OLD_IMAGE
 
       - name: Run new container
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S RUN_NEW_CONTAINER
+        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $RUN_NEW_CONTAINER
