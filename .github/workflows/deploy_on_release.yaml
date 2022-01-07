@@ -1,4 +1,4 @@
-name: Publish on Docker Hub
+name: Build and Deploy
 
 on:
   release:
@@ -8,6 +8,7 @@ on:
       - master
 
 jobs:
+
   build_and_publish:
     runs-on: [ubuntu-latest]
     env:
@@ -52,3 +53,6 @@ jobs:
 
       - name: Run new docker container
         run: docker run --rm -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
+
+      - name: Clear unused images
+        run: echo y | docker image prune -a
