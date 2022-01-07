@@ -36,4 +36,4 @@ jobs:
       - name: Connect on host
         run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }}
       - name: Deploy script
-        run: ./deploy.sh && exit
+        run: ssh diehard@185.246.65.59 echo Linerace2010 | sudo -S ./deploy.sh
