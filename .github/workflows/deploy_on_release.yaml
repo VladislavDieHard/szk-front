@@ -28,7 +28,7 @@ jobs:
     env:
       STOP_OLD_CONTAINER: docker stop szk-vue-app
       REMOVE_OLD_CONTAINER: docker rm szk-vue-app
-      REMOVE_OLD_IMAGE: docker rmi $( echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S docker images | grep 'vladdamage/szk-app')
+#      REMOVE_OLD_IMAGE: docker rmi $( echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S docker images | grep 'vladdamage/szk-app')
       RUN_NEW_CONTAINER: docker run -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
     steps:
       - name: Install SSH Key
@@ -45,8 +45,8 @@ jobs:
       - name: Remove old container
         run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $REMOVE_OLD_CONTAINER
 
-      - name: Remove old image
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $REMOVE_OLD_IMAGE
+#      - name: Remove old image
+#        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $REMOVE_OLD_IMAGE
 
       - name: Run new container
         run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S $RUN_NEW_CONTAINER
