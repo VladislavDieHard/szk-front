@@ -26,9 +26,9 @@ jobs:
     runs-on: [ubuntu-latest]
     #needs: build_and_pub
     env:
-      STOP_OLD_CONTAINER: docker stop $(docker ps -q --filter ancestor=<szk-vue-app> )
+      STOP_OLD_CONTAINER: docker stop szk-vue-app
       REMOVE_OLD_CONTAINER: docker rm szk-vue-app
-      REMOVE_OLD_IMAGE: docker rmi $(docker images | grep 'vladdamage/szk-app')
+      REMOVE_OLD_IMAGE: docker rmi $( echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S docker images | grep 'vladdamage/szk-app')
       RUN_NEW_CONTAINER: docker run -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
     steps:
       - name: Install SSH Key
