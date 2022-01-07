@@ -2,36 +2,6 @@
    <h1>Hi everyone!</h1>
 </template>
 
-<script>
-    import { resizeContentOnMount } from './modules/resizePage.js'
-    import { mapGetters } from 'vuex'
-
-    export default {
-        name: 'App',
-        data() {
-            return {
-                contentResizeStyle: ''
-            }
-        },
-        computed: {
-            ...mapGetters(['getResize', 'getCollapse']),
-            resize() {return this.getResize},
-            menuCollapse() {return this.getCollapse}
-        },
-        methods: {
-            resizePage() {
-                resizeContentOnMount(this)
-            }
-        },
-        mounted() {
-            // console.log(this.$refs.page)
-            // console.log(this.resize)
-
-            this.resizePage()
-        }
-    }
-</script>
-
 <style>
     body {
         font-family: "Open Sans", sans-serif;
