@@ -34,8 +34,14 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.DEPLOY_MACHINE_IP }} >> ~/.ssh/known_hosts
 
-      - name: Stop old container
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S docker-compose down
+#      - name: Stop old container
+#        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S docker-compose down
 
-      - name: Stop old container
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo ${{ secrets.DEPLOY_SUDO_PASS }} | sudo -S docker-compose up -d
+      - name: Add docker remote context
+        run: docker context create remote --docker "host=ssh://${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }}"
+
+      - name: Change docker context
+        run: docker context use remote
+
+      - name: Change docker context
+        run: docker ps
