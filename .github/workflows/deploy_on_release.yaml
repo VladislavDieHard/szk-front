@@ -29,7 +29,7 @@ jobs:
       STOP_OLD_CONTAINER: docker stop $(docker ps -q --filter ancestor=<szk-vue-app> )
       REMOVE_OLD_CONTAINER: docker rm szk-vue-app
       REMOVE_OLD_IMAGE: docker rmi $(docker images | grep 'vladdamage/szk-app')
-      RUN_NEW_CONTAINER: docker run -p 8000:3000 --name szk-vue-app vladdamage/szk-app:master
+      RUN_NEW_CONTAINER: docker run -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
     steps:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
