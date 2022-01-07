@@ -1,16 +1,8 @@
 <template>
-    <AsideMenu @collapse-event="resizePage"/>
-    <div
-            ref="page"
-            class="page"
-            :style="contentResizeStyle"
-    >
-        <router-view></router-view>
-    </div>
+   <h1>Hi everyone!</h1>
 </template>
 
 <script>
-    import AsideMenu from '@/components/AsideMenu.vue'
     import { resizeContentOnMount } from './modules/resizePage.js'
     import { mapGetters } from 'vuex'
 
