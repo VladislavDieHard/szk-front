@@ -45,7 +45,7 @@ jobs:
 
       - name: Check container exists
         id: check
-        run: OUTPUT=${docker ps -q --filter "name=szk-vue-app"}
+        run: OUTPUT=$(docker ps -q --filter "name=szk-vue-app")
 
       - name: Remove old container
         if: steps.check.outputs.OUTPUT != ''
