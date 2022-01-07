@@ -3,6 +3,9 @@ name: Publish on Docker Hub
 on:
   release:
     types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
   build_and_pub:
@@ -18,3 +21,15 @@ jobs:
         run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} ./client
       - name: Push image to docker.io
         run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
+
+  deploy:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+      - name: Adding Known Hosts
+          run: ssh-keyscan -H ${{ secrets.DEPLOY_MACHINE_IP }} >> ~/.ssh/known_hosts
+      - name: Deploy on host
+          run: ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} && echo 1
