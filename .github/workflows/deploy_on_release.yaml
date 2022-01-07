@@ -33,7 +33,5 @@ jobs:
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.DEPLOY_MACHINE_IP }} >> ~/.ssh/known_hosts
-      - name: Connect on host
-        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }}
-      - name: Deploy script
-        run: ssh diehard@185.246.65.59 echo Linerace2010 | sudo -S ./deploy.sh
+      - name: Connect on host and deploy
+        run: ssh -tt ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_MACHINE_IP }} echo Linerace2010 | sudo -S ./deploy.sh
