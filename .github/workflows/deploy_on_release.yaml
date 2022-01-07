@@ -43,5 +43,13 @@ jobs:
       - name: Pull newer docker image
         run: docker pull vladdamage/szk-app:master
 
+      - name: Check container exists
+        id: check
+        run: OUTPUT=${docker ps -q --filter "name=szk-vue-app"}
+
+      - name: Remove old container
+        if: steps.check.outputs.OUTPUT != ''
+        run: docker rm -f -v $(echo | docker ps -q --filter "name=szk-vue-app")
+
       - name: Run new docker container
-        run: docker run -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
+        run: docker run --rm -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
