@@ -21,7 +21,7 @@ jobs:
       - name: Build image
         run: docker build -t $LOGIN/$NAME:latest ./client
       - name: Push image to docker.io
-        run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
+        run: docker push $LOGIN/$NAME:latest
 
   deploy:
     runs-on: [ubuntu-latest]
