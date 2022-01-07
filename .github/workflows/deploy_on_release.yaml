@@ -19,7 +19,7 @@ jobs:
         run:  echo ${{ secrets.DOCKER_PASS }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
       - uses: actions/checkout@master
       - name: Build image
-        run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} ./client
+        run: docker build -t $LOGIN/$NAME:latest ./client
       - name: Push image to docker.io
         run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
 
@@ -40,7 +40,7 @@ jobs:
           docker context use remote
 
       - name: Pull newer docker image
-        run: docker pull vladdamage/szk-app:master
+        run: docker pull vladdamage/szk-app:latest
 
       - name: Check container exists
         id: check
@@ -52,7 +52,7 @@ jobs:
         run: docker rm -f -v $(echo | docker ps -q --filter "name=szk-vue-app")
 
       - name: Run new docker container
-        run: docker run --rm -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:master
+        run: docker run --rm -d -p 3000:8080 --name szk-vue-app vladdamage/szk-app:latest
 
       - name: Clear unused images
         run: echo y | docker image prune -a
