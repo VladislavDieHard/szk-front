@@ -1,9 +1,12 @@
 <template>
     <div class="content">
         <div class="main-carousel">
-            <el-carousel indicator-position="outside">
-                <el-carousel-item v-for="item in 4" :key="item">
-                    <h3>{{ item }}</h3>
+            <el-carousel indicator-position="outside" trigger="click">
+                <el-carousel-item v-for="post in posts" :key="post.id">
+                    <a :href="`/${post.link}`" _blank>
+                        <h3 class="el-carousel__item__title">{{ post.title }}</h3>
+                        <img :src="`http://92.63.192.101${post?.image?.url}`" alt="" class="el-carousel__item__img">
+                    </a>
                 </el-carousel-item>
             </el-carousel>
         </div>
@@ -13,45 +16,48 @@
 
 <script>
     import MainMenuDesktop from './menus/MainMenuDesktop'
+    import {computed, reactive, toRefs} from "@vue/reactivity";
+    import {useStore} from "vuex";
+    import {onBeforeMount} from "@vue/runtime-core";
 
     export default {
         name: 'NewsDesktop',
         components: {MainMenuDesktop},
-        data() {
+        setup () {
+            const store = useStore()
+
+            const templateVars = reactive({
+                posts: computed(() => store.getters['getPosts'])
+            })
+
+            onBeforeMount(async () => {
+                await store.dispatch('fetchPosts')
+            })
+
             return {
-                collapseItem: 'none',
-                collapseCondition: false
-            }
-        },
-        methods: {
-            openCollapse(itemName) {
-                if (this.collapseItem === itemName) {
-                    this.collapseItem = 'none';
-                    this.collapseCondition = false
-                } else {
-                    this.collapseItem = itemName;
-                    this.collapseCondition = true
-                }
+                ...toRefs(templateVars)
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .el-carousel__item h3 {
-        color: #475669;
-        font-size: 18px;
-        opacity: 0.75;
-        line-height: 300px;
-        margin: 0;
-        text-align: center;
+    .content {
+        width: 90%;
+        margin: 0 auto;
     }
 
-    .el-carousel__item:nth-child(2n) {
-        background-color: #99a9bf;
-    }
-
-    .el-carousel__item:nth-child(2n + 1) {
-        background-color: #d3dce6;
+    .el-carousel__item {
+        &__title {
+            font-size: 40px;
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+        }
+        &__img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     }
 </style>
